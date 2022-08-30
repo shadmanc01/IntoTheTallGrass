@@ -41,7 +41,8 @@ scene("game", () => {
 
 })
 
-// keyEvents
+
+keyEvents
 
 const playerSpeed = 120;
 const jumpForce = 360;
