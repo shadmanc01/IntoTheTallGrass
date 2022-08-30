@@ -1,14 +1,20 @@
 kaboom({
     global: true,
     fullscreen: true,
-    scale: 1,
+    scale: 2,
     debug: true,
     clearColor: [0, 0, 0, 1]
 })
 
+//JS Variables
+const playerSpeed = 120;
+const jumpForce = 400;
+const FALL_DEATH = 400
+
 //sprites here
 loadSprite('coin', 'img/coin.png')
 loadSprite('floor', 'img/floor.png')
+loadSprite('mario', 'img/mario.png')
 
 scene("game", () => {
     layers(['bg', 'obj', 'ui'], 'obj')
@@ -26,59 +32,40 @@ scene("game", () => {
         '                                                         ',
         '                                                         ',
         '                                                         ',
-        '                                                         ',
-        '                                                         ',
-        '                                                         ',
-        '                                                         ',
-        '                                                         ',
-        '===========================================          ====',
-        '===========================================          ====',
-        '===========================================          ====',
-        '===========================================          ====',
+        '                                 =                       ',
+        '                  =====          =                       ',
+        '                                ==      =                ',
+        '                               ===      ==               ',
+        '                              ====      ===              ',
+        '==================================      =================',
+        '==================================      =================',
+        '==================================      =================',
+        '==================================      =================',
     ]
 
     //assigning sprite
     const levelCfg = {
         width: 20,
         height: 20,
-        '=': [sprite('floor', solid())]
+        '=': [sprite('floor'), solid()]
     }
 
     const gameLevel = addLevel(map, levelCfg)
 
-})
 
 
-keyEvents
-
-const playerSpeed = 120;
-const jumpForce = 360;
-
-keyDown('left', () => {
-    player.move(-playerSpeed, 0);
-})
-
-keyDown('right', () => {
-    player.move(+playerSpeed, 0);
-})
-
-keyDown('space', () => {
-    if(player.grounded()) {
-        player.jump(jumpForce)
-    }
-})
-
+//player data
 const player = add([
     sprite('mario'), solid(),
     pos(30, 0),
     body(),
-    big(),
+    //big(),
     origin('bot')
   ])
 
-  action('mushroom', (m) => {
-    m.move(20, 0)
-  })
+   action('mushroom', (m) => {
+     m.move(20, 0)
+   })
 
   player.on("headbump", (obj) => {
     if (obj.is('coin-surprise')) {
@@ -119,7 +106,7 @@ const player = add([
   player.action(() => {
     camPos(player.pos)
     if (player.pos.y >= FALL_DEATH) {
-      go('lose', { score: scoreLabel.value})
+     go('lose', { score: scoreLabel.value})
     }
   })
 
@@ -131,5 +118,21 @@ const player = add([
       })
     })
   })
-  
+
+//keyEvents
+ keyDown('left', () => {
+     player.move(-playerSpeed, 0);
+ })
+
+ keyDown('right', () => {
+     player.move(+playerSpeed, 0);
+ })
+
+ keyDown('space', () => {
+     if(player.grounded()) {
+         player.jump(jumpForce)
+     }
+ })
+})
+
 start("game")
