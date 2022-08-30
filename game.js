@@ -7,34 +7,34 @@ kaboom({
 })
 
 //sprites here
-loadRoot('https://i.imgur.com/')
-loadSprite('coin', 'wbKxhcd.png')
-loadSprite('evil-shroom', 'KPO3fR9.png')
-loadSprite('brick', 'pogC9x5.png')
-loadSprite('block', 'M6rwarW.png')
-loadSprite('mario', 'Wb1qfhK.png')
-loadSprite('mushroom', '0wMd92p.png')
-loadSprite('surprise', 'gesQ1KP.png')
-loadSprite('unboxed', 'bdrLpi6.png')
-loadSprite('pipe-top-left', 'ReTPiWY.png')
-loadSprite('pipe-top-right', 'hj2GK4n.png')
-loadSprite('pipe-bottom-left', 'c1cYSbt.png')
-loadSprite('pipe-bottom-right', 'nqQ79eI.png')
+loadSprite('coin', 'img/coin.png')
+loadSprite('floor', 'img/floor.png')
 
 scene("game", () => {
     layers(['bg', 'obj', 'ui'], 'obj')
 
     const map = [
-        '                                                ',
-        '                                                ',
-        '================================================',
+        '                                           ',
+        '                                           ',
+        '                                           ',
+        '                                           ',
+        '                                           ',
+        '                                           ',
+        '                                           ',
+        '                                           ',
+        '                                           ',
+        '                                           ',
+        '                                           ',
+        '                                           ',
+        '                                           ',
+        '===========================================',
     ]
 
     //assigning sprite
     const levelCfg = {
         width: 20,
         height: 20,
-        '=': [sprite('block', solid())]
+        '=': [sprite('floor', solid())]
     }
 
     const gameLevel = addLevel(map, levelCfg)
