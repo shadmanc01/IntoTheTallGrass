@@ -55,13 +55,37 @@ scene("game", ({ score }) => {
         '===========================    ================================                                                                                               ',
         '===========================    ================================                                                                                               ',
     ]
+    
+    //Function
+    function patrol(speed = 60, dir = 1) {
+      return {
+        id: "patrol",
+        require: [ "pos", "area", ],
+        add() {
+          this.on("collide", (obj, col) => {
+            if (col.isLeft() || col.isRight()) {
+              dir = -dir
+            }
+          })
+        },
+        update() {
+          this.move(speed * dir, 0)
+        },
+      }
+    }
 
     //assigning sprite
     const levelCfg = {
         width: 20,
         height: 20,
         '=': [sprite('floor'), solid()],
-        'x': [sprite('enemy'), solid(), 'dangerous'],
+        'x': [
+          sprite('enemy'),
+          solid(),
+          body(),
+          // area(),
+          patrol(),
+          'dangerous'],
     }
 
     const gameLevel = addLevel(map, levelCfg)
@@ -111,31 +135,10 @@ const player = add([
     scoreLabel.value++
     scoreLabel.text = scoreLabel.value
   })
-  function patrol(distance = 100, speed = 50, dir = 1) {
-    return {
-      id: "patrol",
-      require: ["pos", "area",],
-      startingPos: vec2(0, 0),
-      add() {
-        this.startingPos = this.pos;
-        this.on("collide", (obj, side) => {
-          if (side === "left" || side === "right") {
-            dir = -dir;
-          }
-        });
-      },
-      update() {
-        if (Math.abs(this.pos.x - this.startingPos.x) >= distance) {
-          dir = -dir;
-        }
-        this.move(speed * dir, 0);
-      },
-    };
-  }
-  action('dangerous', (d) => {
-      // d.move(-ENEMY_SPEED, 0)
-    patrol()
-  })
+ 
+  // action('dangerous', (d) => {
+  //     d.move(-ENEMY_SPEED, 0)
+  // })
 
 
   let isJumping = true;
