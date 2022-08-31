@@ -78,7 +78,7 @@ scene("game", ({ score }) => {
 //player data
 const player = add([
     sprite('mario'), solid(),
-    pos(30, 0),
+    pos(30, 500),
     body(),
     //big(),
     origin('bot')
