@@ -16,7 +16,7 @@ loadSprite('coin', 'img/coin.png')
 loadSprite('floor', 'img/floor.png')
 loadSprite('mario', 'img/mario.png')
 
-scene("game", () => {
+scene("game", ({ score }) => {
     layers(['bg', 'obj', 'ui'], 'obj')
 
     const map = [
@@ -52,7 +52,14 @@ scene("game", () => {
 
     const gameLevel = addLevel(map, levelCfg)
 
-
+    const scoreLabel = add([
+      text(score),
+      pos(30, 6),
+      layer('ui'),
+      {
+        value: score,
+      }
+    ])
 
 //player data
 const player = add([
@@ -139,4 +146,4 @@ scene('lose', ({ score }) => {
   add([text(score, 32), origin('center'), pos(width()/2, height()/2)])
 })
 
-start("game")
+start("game", { score: 0})
