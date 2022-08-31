@@ -157,6 +157,8 @@ const player = add([
   player.onCollide('dangerous', (d) => {
     if (isJumping) {
       destroy(d)
+      scoreLabel.value++
+      scoreLabel.text = scoreLabel.value
     } else {
       go('lose', { score: scoreLabel.value})
     }
