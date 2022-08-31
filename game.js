@@ -51,11 +51,7 @@ scene("game", ({ score }) => {
         '          =====         ===                      = = =           =======                                                                                      ',
         '                       ====    =               = = = =                                                                                                        ',
         '                      =====    ==            = = = = =                                                                                                        ',
-
         '              x    x ======    ===   x   x = = = = = =   x   x            x  x x                                                                                  ',
-
-        '              x  X   ======    ===       x = = = = = =                                                                                                        ',
-
         '===========================    ================================                                                                                               ',
         '===========================    ================================                                                                                               ',
         '===========================    ================================                                                                                               ',
@@ -86,15 +82,20 @@ scene("game", ({ score }) => {
         height: 20,
         '=': [sprite('floor'), solid()],
 
-        'x': [
-          sprite('enemy'),
-          solid(),
-          body(),
-          // area(),
-          patrol(),
-          'dangerous'],
+        // 'x': [
+        //   sprite('enemy'),
+        //   solid(),
+        //   body(),
+        //   // area(),
+        //   patrol(),
+        //   'dangerous'],
 
-        //'x': [sprite('enemy'), solid(), 'dangerous', scale(.05)], 
+        'x': [sprite('enemy'),
+         solid(),
+          body(),
+           scale(.05), 
+           patrol(),
+           'dangerous'],
         'X': [sprite('boss'), solid(), 'dangerous', scale(.1)],
     }
 
