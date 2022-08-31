@@ -10,7 +10,7 @@ kaboom({
 const playerSpeed = 120;
 const jumpForce = 400;
 const FALL_DEATH = 700;
-const ENEMY_SPEED = 20;
+const ENEMY_SPEED = 120;
 
 //sprites here
 loadSprite('coin', 'img/coin.png')
@@ -49,7 +49,7 @@ scene("game", ({ score }) => {
         '          =====         ===                      = = =           =======                                                                                      ',
         '                       ====    =               = = = =                                                                                                        ',
         '                      =====    ==            = = = = =                                                                                                        ',
-        '              x      ======    ===       x = = = = = =                                                                                                        ',
+        '              x    x ======    ===   x   x = = = = = =   x   x            x  x x                                                                                  ',
         '===========================    ================================                                                                                               ',
         '===========================    ================================                                                                                               ',
         '===========================    ================================                                                                                               ',
@@ -68,7 +68,7 @@ scene("game", ({ score }) => {
 
     const scoreLabel = add([
       text(score),
-      pos(30, 6),
+      pos(30, 300),
       layer('ui'),
       {
         value: score,
@@ -151,9 +151,16 @@ const player = add([
      player.move(+playerSpeed, 0);
  })
 
+ player.action(() => {
+  if(player.grounded()) {
+    isJumping = false
+  }
+})
+
  keyDown('space', () => {
      if(player.grounded()) {
-         player.jump(jumpForce)
+      isJumping = true
+      player.jump(jumpForce)
      }
  })
 })
