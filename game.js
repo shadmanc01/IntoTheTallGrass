@@ -100,12 +100,14 @@ scene("game", ({ score }) => {
 
     const scoreLabel = add([
       text(score),
-      pos(30, 300),
+      pos(0,0),
       layer('ui'),
+      fixed(),
       {
         value: score,
       }
     ])
+
 
 //player data
 const player = add([
@@ -155,10 +157,13 @@ const player = add([
   player.onCollide('dangerous', (d) => {
     if (isJumping) {
       destroy(d)
+      scoreLabel.value++
+      scoreLabel.text = scoreLabel.value
     } else {
       go('lose', { score: scoreLabel.value})
     }
   })
+
 
   player.onUpdate(() => {
     camPos(player.pos)
