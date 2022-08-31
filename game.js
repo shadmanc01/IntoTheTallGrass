@@ -10,7 +10,7 @@ kaboom({
 const playerSpeed = 120;
 const jumpForce = 400;
 const FALL_DEATH = 700;
-const ENEMY_SPEED = 20;
+const ENEMY_SPEED = 120;
 
 //sprites here
 loadSprite('coin', 'img/coin.png')
@@ -51,19 +51,50 @@ scene("game", ({ score }) => {
         '          =====         ===                      = = =           =======                                                                                      ',
         '                       ====    =               = = = =                                                                                                        ',
         '                      =====    ==            = = = = =                                                                                                        ',
+
+        '              x    x ======    ===   x   x = = = = = =   x   x            x  x x                                                                                  ',
+
         '              x  X   ======    ===       x = = = = = =                                                                                                        ',
+
         '===========================    ================================                                                                                               ',
         '===========================    ================================                                                                                               ',
         '===========================    ================================                                                                                               ',
         '===========================    ================================                                                                                               ',
     ]
+    
+    //Function
+    function patrol(speed = 60, dir = 1) {
+      return {
+        id: "patrol",
+        require: [ "pos", "area", ],
+        add() {
+          this.on("collide", (obj, col) => {
+            if (col.isLeft() || col.isRight()) {
+              dir = -dir
+            }
+          })
+        },
+        update() {
+          this.move(speed * dir, 0)
+        },
+      }
+    }
 
     //assigning sprite
     const levelCfg = {
         width: 20,
         height: 20,
         '=': [sprite('floor'), solid()],
-        'x': [sprite('enemy'), solid(), 'dangerous', scale(.05)], 
+
+        'x': [
+          sprite('enemy'),
+          solid(),
+          body(),
+          // area(),
+          patrol(),
+          'dangerous'],
+
+        //'x': [sprite('enemy'), solid(), 'dangerous', scale(.05)], 
         'X': [sprite('boss'), solid(), 'dangerous', scale(.1)],
     }
 
@@ -71,7 +102,7 @@ scene("game", ({ score }) => {
 
     const scoreLabel = add([
       text(score),
-      pos(30, 6),
+      pos(30, 300),
       layer('ui'),
       {
         value: score,
@@ -81,7 +112,7 @@ scene("game", ({ score }) => {
 //player data
 const player = add([
     sprite('mario'), solid(),
-    pos(30, 0),
+    pos(30, 500),
     body(),
     //big(),
     origin('bot')
@@ -114,10 +145,11 @@ const player = add([
     scoreLabel.value++
     scoreLabel.text = scoreLabel.value
   })
+ 
+  // action('dangerous', (d) => {
+  //     d.move(-ENEMY_SPEED, 0)
+  // })
 
-  action('dangerous', (d) => {
-    d.move(-ENEMY_SPEED, 0)
-  })
 
   let isJumping = true;
 
@@ -154,9 +186,16 @@ const player = add([
      player.move(+playerSpeed, 0);
  })
 
+ player.action(() => {
+  if(player.grounded()) {
+    isJumping = false
+  }
+})
+
  keyDown('space', () => {
      if(player.grounded()) {
-         player.jump(jumpForce)
+      isJumping = true
+      player.jump(jumpForce)
      }
  })
 })
