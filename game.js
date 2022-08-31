@@ -9,12 +9,14 @@ kaboom({
 //JS Variables
 const playerSpeed = 120;
 const jumpForce = 400;
-const FALL_DEATH = 700
+const FALL_DEATH = 700;
+const ENEMY_SPEED = 20;
 
 //sprites here
 loadSprite('coin', 'img/coin.png')
 loadSprite('floor', 'img/floor.png')
 loadSprite('mario', 'img/mario.png')
+loadSprite('enemy', 'img/goomba1.png')
 
 scene("game", () => {
     layers(['bg', 'obj', 'ui'], 'obj')
@@ -47,7 +49,7 @@ scene("game", () => {
         '          =====         ===                      = = =           =======                                                                                      ',
         '                       ====    =               = = = =                                                                                                        ',
         '                      =====    ==            = = = = =                                                                                                        ',
-        '                     ======    ===         = = = = = =                                                                                                        ',
+        '              x      ======    ===       x = = = = = =                                                                                                        ',
         '===========================    ================================                                                                                               ',
         '===========================    ================================                                                                                               ',
         '===========================    ================================                                                                                               ',
@@ -58,7 +60,8 @@ scene("game", () => {
     const levelCfg = {
         width: 20,
         height: 20,
-        '=': [sprite('floor'), solid()]
+        '=': [sprite('floor'), solid()],
+        'x': [sprite('enemy'), solid(), 'dangerous'],
     }
 
     const gameLevel = addLevel(map, levelCfg)
@@ -105,6 +108,8 @@ const player = add([
   action('dangerous', (d) => {
     d.move(-ENEMY_SPEED, 0)
   })
+
+  let isJumping = true;
 
   player.collides('dangerous', (d) => {
     if (isJumping) {
