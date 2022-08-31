@@ -3,7 +3,7 @@ kaboom({
     fullscreen: true,
     scale: 1,
     debug: true,
-    clearColor: [0, 0, 0, 1]
+    background: [0, 0, 0, 1]
 })
 
 //JS Variables
@@ -115,7 +115,7 @@ const player = add([
     origin('bot')
   ])
 
-   action('mushroom', (m) => {
+   onUpdate('mushroom', (m) => {
      m.move(20, 0)
    })
 
@@ -132,12 +132,12 @@ const player = add([
     }
   })
 
-  player.collides('mushroom', (m) => {
+  player.onCollide('mushroom', (m) => {
     destroy(m)
     player.biggify(6)
   })
 
-  player.collides('coin', (c) => {
+  player.onCollide('coin', (c) => {
     destroy(c)
     scoreLabel.value++
     scoreLabel.text = scoreLabel.value
@@ -150,7 +150,7 @@ const player = add([
 
   let isJumping = true;
 
-  player.collides('dangerous', (d) => {
+  player.onCollide('dangerous', (d) => {
     if (isJumping) {
       destroy(d)
     } else {
@@ -158,14 +158,14 @@ const player = add([
     }
   })
 
-  player.action(() => {
+  player.onUpdate(() => {
     camPos(player.pos)
     if (player.pos.y >= FALL_DEATH) {
      go('lose', { score: scoreLabel.value})
     }
   })
 
-  player.collides('pipe', () => {
+  player.onCollide('pipe', () => {
     keyPress('down', () => {
       go('game', {
         level: (level + 1) % maps.length,
@@ -175,22 +175,22 @@ const player = add([
   })
 
 //keyEvents
- keyDown('left', () => {
+ onKeyDown('left', () => {
      player.move(-playerSpeed, 0);
  })
 
- keyDown('right', () => {
+ onKeyDown('right', () => {
      player.move(+playerSpeed, 0);
  })
 
- player.action(() => {
-  if(player.grounded()) {
+ player.onUpdate(() => {
+  if(player.isGrounded()) {
     isJumping = false
   }
 })
 
- keyDown('space', () => {
-     if(player.grounded()) {
+ onKeyDown('space', () => {
+     if(player.isGrounded()) {
       isJumping = true
       player.jump(jumpForce)
      }
