@@ -8,8 +8,8 @@ kaboom({
 
 //JS Variables
 const playerSpeed = 120;
-const jumpForce = 400;
-const FALL_DEATH = 700;
+const jumpForce = 550;
+const FALL_DEATH = 700; 
 const ENEMY_SPEED = 120;
 
 //sprites here
@@ -59,7 +59,7 @@ scene("game", ({ score }) => {
     ]
     
     //Function
-    function patrol(speed = 60, dir = 1) {
+     function patrol(speed = 60, dir = 1) {
       return {
         id: "patrol",
         require: [ "pos", "area", ],
@@ -80,20 +80,15 @@ scene("game", ({ score }) => {
     const levelCfg = {
         width: 20,
         height: 20,
-        '=': [sprite('floor'), solid()],
+        '=': () => [sprite('floor'), solid(), area()],
 
-        // 'x': [
-        //   sprite('enemy'),
-        //   solid(),
-        //   body(),
-        //   // area(),
-        //   patrol(),
-        //   'dangerous'],
-
-        'x': [sprite('enemy'),
+        'x': () => [sprite('enemy'),
          solid(),
+         area(),
           body(),
            scale(.05), 
+           origin('bot'),
+          //  area(),
            patrol(),
            'dangerous'],
         'X': [sprite('boss'), solid(), 'dangerous', scale(.1)],
@@ -115,6 +110,7 @@ const player = add([
     sprite('mario'), solid(),
     pos(30, 500),
     body(),
+    area(),
     //big(),
     origin('bot')
   ])
@@ -205,4 +201,4 @@ scene('lose', ({ score }) => {
   add([text(score, 32), origin('center'), pos(width()/2, height()/2)])
 })
 
-start("game", { score: 0})
+go("game", { score: 0})
