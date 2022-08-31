@@ -17,6 +17,8 @@ loadSprite('coin', 'img/coin.png')
 loadSprite('floor', 'img/floor.png')
 loadSprite('mario', 'img/mario.png')
 loadSprite('enemy', 'img/goomba1.png')
+loadSprite('boss', 'img/boss.png')
+loadSprite('tree', 'img/tree.png')
 
 scene("game", ({ score }) => {
     layers(['bg', 'obj', 'ui'], 'obj')
@@ -49,7 +51,11 @@ scene("game", ({ score }) => {
         '          =====         ===                      = = =           =======                                                                                      ',
         '                       ====    =               = = = =                                                                                                        ',
         '                      =====    ==            = = = = =                                                                                                        ',
+
         '              x    x ======    ===   x   x = = = = = =   x   x            x  x x                                                                                  ',
+
+        '              x  X   ======    ===       x = = = = = =                                                                                                        ',
+
         '===========================    ================================                                                                                               ',
         '===========================    ================================                                                                                               ',
         '===========================    ================================                                                                                               ',
@@ -79,6 +85,7 @@ scene("game", ({ score }) => {
         width: 20,
         height: 20,
         '=': [sprite('floor'), solid()],
+
         'x': [
           sprite('enemy'),
           solid(),
@@ -86,6 +93,9 @@ scene("game", ({ score }) => {
           // area(),
           patrol(),
           'dangerous'],
+
+        //'x': [sprite('enemy'), solid(), 'dangerous', scale(.05)], 
+        'X': [sprite('boss'), solid(), 'dangerous', scale(.1)],
     }
 
     const gameLevel = addLevel(map, levelCfg)
