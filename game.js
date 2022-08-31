@@ -58,7 +58,7 @@ scene("game", ({ score }) => {
         '===========================    ================================                                                                                               ',
     ]
     
-    //Function
+    //Functions
      function patrol(speed = 60, dir = 1) {
       return {
         id: "patrol",
@@ -75,6 +75,8 @@ scene("game", ({ score }) => {
         },
       }
     }
+
+    
 
     //assigning sprite
     const levelCfg = {
@@ -198,7 +200,50 @@ const player = add([
 })
 
 scene('lose', ({ score }) => {
+  add([text('You Lose'), pos(325, 200)])
   add([text(score, 32), origin('center'), pos(width()/2, height()/2)])
+  function addButton2(txt, p) {
+
+    const btn = add([
+      text(txt),
+      pos(p),
+      area({ cursor: "pointer", }),
+      scale(1),
+      origin("center")
+    ])
+  
+    btn.onClick(() => {
+      go("game", { score: 0})
+    })
+
+    onKeyDown('space', () => {
+      go("game", {score:0})
+  })
+
+  onKeyDown('enter', () => {
+    go("game", {score:0})
+})
+  
+    btn.onUpdate(() => {
+      if (btn.isHovering()) {
+        const t = time() * 10
+        btn.color = rgb(
+          wave(0, 255, t),
+          wave(0, 255, t + 2),
+          wave(0, 255, t + 4)
+        )
+        btn.scale = vec2(1.2)
+      } else {
+        btn.scale = vec2(1)
+        btn.color = rgb()
+      }
+    })
+  }
+  addButton2("Restart", vec2(514, 450))
 })
 
 go("game", { score: 0})
+
+
+// reset cursor to default at frame start for easier cursor management
+onUpdate(() => cursor("default"))
