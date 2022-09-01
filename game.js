@@ -137,7 +137,7 @@ scene("game", ({ score }) => {
 
     const scoreLabel = add([
       text(score),
-      pos(0,0),
+      pos(20,20),
       layer('ui'),
       fixed(),
       {
@@ -288,7 +288,7 @@ scene('Home', () => {
   addButton2("Play", vec2(700, 400), "game")
 })
 
-go("game", { score: 0})
+go("Home", { score: 0})
 
 // reset cursor to default at frame start for easier cursor management
 onUpdate(() => cursor("default"))
