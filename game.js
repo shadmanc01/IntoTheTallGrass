@@ -271,9 +271,9 @@ scene('lose', ({ score }) => {
     scale(3),
     fixed(),
   ]);
-  add([text('You Lose'), pos(325, 200)])
-  add([text(score, 32), origin('center'), pos(width()/2, height()/2)])
-  addButton2("Restart", vec2(514, 450), "game")
+  add([text('You Lose'), pos(670, 150)])
+  add([text(score, 32), origin('center'), pos(840, 285)])
+  addButton2("Restart", vec2(850, 400), "game")
 })
 
 scene('Home', () => {
@@ -288,7 +288,7 @@ scene('Home', () => {
   addButton2("Play", vec2(850, 400), "game")
 })
 
-go("win", { score: 0})
+go("lose", { score: 0})
 
 // reset cursor to default at frame start for easier cursor management
 onUpdate(() => cursor("default"))
