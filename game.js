@@ -155,14 +155,7 @@ const player = add([
     */
   })
 
- 
-  // action('dangerous', (d) => {
-  //     d.move(-ENEMY_SPEED, 0)
-  // })
-
-
   let isJumping = true;
-
 
   player.onCollide('coin', (c) => {
     destroy(c)
@@ -179,7 +172,6 @@ const player = add([
       go('lose', { score: scoreLabel.value})
     }
   })
-
 
   player.onUpdate(() => {
     camPos(player.pos)
@@ -232,7 +224,6 @@ scene('Home', () => {
 })
 
 go("Home", { score: 0})
-
 
 // reset cursor to default at frame start for easier cursor management
 onUpdate(() => cursor("default"))
