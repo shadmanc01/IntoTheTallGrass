@@ -23,6 +23,12 @@ loadSprite('tree', 'img/tree.png')
 loadSprite('qBlock', 'img/qBlock.png')
 loadSprite('block', 'img/block.png')
 loadSprite('brick', 'img/brick.png')
+loadSound('route1', 'sound/route1.mp3')
+
+const music = play('route1', {
+  loop: true
+})
+volume(0.5)
 
 //Functions
 function patrol(speed = 60, dir = 1) {
