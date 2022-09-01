@@ -238,7 +238,49 @@ scene('lose', ({ score }) => {
   addButton2("Restart", vec2(514, 450))
 })
 
-go("game", { score: 0})
+scene('Home', () => {
+  add([text('Pokemon Adventure'), pos(325, 200)])
+  function addButton2(txt, p) {
+
+    const btn = add([
+      text(txt),
+      pos(p),
+      area({ cursor: "pointer", }),
+      scale(1),
+      origin("center")
+    ])
+  
+    btn.onClick(() => {
+      go("game", { score: 0})
+    })
+
+    onKeyDown('space', () => {
+      go("game", {score:0})
+  })
+
+  onKeyDown('enter', () => {
+    go("game", {score:0})
+})
+  
+    btn.onUpdate(() => {
+      if (btn.isHovering()) {
+        const t = time() * 10
+        btn.color = rgb(
+          wave(0, 255, t),
+          wave(0, 255, t + 2),
+          wave(0, 255, t + 4)
+        )
+        btn.scale = vec2(1.2)
+      } else {
+        btn.scale = vec2(1)
+        btn.color = rgb()
+      }
+    })
+  }
+  addButton2("Play", vec2(514, 450))
+})
+
+go("Home", { score: 0})
 
 
 // reset cursor to default at frame start for easier cursor management
