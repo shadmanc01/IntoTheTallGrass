@@ -20,43 +20,25 @@ loadSprite('mario', 'img/mario.png')
 loadSprite('enemy', 'img/goomba1.png')
 loadSprite('boss', 'img/boss.png')
 loadSprite('tree', 'img/tree.png')
+loadSprite('qBlock', 'img/qBlock.png')
+loadSprite('block', 'img/block.png')
 
 scene("game", ({ score }) => {
     layers(['bg', 'obj', 'ui'], 'obj')
 
     const map = [
-        '                                                                                                                                                              ',
-        '                                                                                                                                                              ',
-        '                                                                                    ====                                                                      ',
-        '                                                                                                                                                              ',
-        '                                                                                                                                                              ',
-        '                                                                                ====    ====                                                                  ',
-        '                                                                                                                                                              ',
-        '                                                                                                       ===                                                    ',
-        '                                                                             x               x         ===                                                    ',
-        '                                                                      =====================================                                                   ',
-        '                                                                      =====================================                                                   ',
-        '                                                                      =====================================   x           ==                   ==      x       ',
-        '                                                          ========                                         =================     =   x =       =================',
-        '                                                                                                           =================     ========       ================',
-        '                                                                                                           =================                   ================',
-        '                                                                                                                                                              ',
-        '                                                                    =============                                      =   x   x =                             ',
-        '                                                                                =                                      ===========                             ',
-        '                                                                                =                                                                              ',
-        '                                                                                =                                                        =    x    x  =        ',
-        '                                                          ===========           =                                                      ================        ',
-        '                                                                          =======         =    xx      =      =         x             ==               ==         ',
-        '                                                     =                                    ==============      =========================                 ==    ',
-        '                         ==                        = =                                    =                                                               ====  ',
-        '          =====         ===                      = = =               =====                =                                                                  =  ',
-        '                       ====    =               = = = =             =                      =                                                                  =  ',
-        '                      =====    ==            = = = = =           =                        =                                                                  =  ',
-        '              x    x ======    ===   x   x = = = = = =   x   x  =                         =                                                                  =  ',
-        '===========================    ==================================                         =                                                                  =   ',
-        '===========================    ==================================                         =                                                                  =   ',
-        '===========================    ==================================                         =                                                                  =   ',
-        '===========================    ==================================                         ==================================================================== ',
+      '                                                                                    ',
+      '                                                                                    ',
+      '                                                                                    ',
+      '                                                                                    ',
+      '                                                                                    ',
+      '                                                                                    ',
+      '                                                                                    ',
+      '                                                                                    ',
+      '          ?                                                                         ',
+      '                                                                                    ',
+      '                  $$$                                                               ',
+      '====================================================================================',
     ]
     
     //Functions
@@ -84,17 +66,11 @@ scene("game", ({ score }) => {
         width: 20,
         height: 20,
         '=': () => [sprite('floor'), solid(), area()],
-
-        'x': () => [sprite('enemy'),
-         solid(),
-         area(),
-          body(),
-           scale(.05), 
-           origin('bot'),
-          //  area(),
-           patrol(),
-           'dangerous'],
+        'x': () => [sprite('enemy'), solid(), area(), body(), scale(.05), origin('bot'), patrol(), 'dangerous'],
         'X': [sprite('boss'), solid(), 'dangerous', scale(.1)],
+        '$': () => [sprite('coin'), 'coin', area()],
+        '?': () => [sprite('qBlock'), solid(), area(), 'qBlock'],
+        '}': () => [sprite('block'), solid(), area(), 'block']
     }
 
     const gameLevel = addLevel(map, levelCfg)
@@ -113,7 +89,7 @@ scene("game", ({ score }) => {
 //player data
 const player = add([
     sprite('mario'), solid(),
-    pos(30, 500),
+    pos(30, 0),
     body(),
     area(),
     //big(),
@@ -124,17 +100,19 @@ const player = add([
      m.move(20, 0)
    })
 
-  player.on("headbump", (obj) => {
-    if (obj.is('coin-surprise')) {
+  player.onHeadbutt((obj) => {
+    if (obj.is('qBlock')) {
       gameLevel.spawn('$', obj.gridPos.sub(0, 1))
       destroy(obj)
       gameLevel.spawn('}', obj.gridPos.sub(0,0))
     }
+    /*
     if (obj.is('mushroom-surprise')) {
       gameLevel.spawn('#', obj.gridPos.sub(0, 1))
       destroy(obj)
       gameLevel.spawn('}', obj.gridPos.sub(0,0))
     }
+    */
   })
 
  
@@ -144,6 +122,13 @@ const player = add([
 
 
   let isJumping = true;
+
+
+  player.onCollide('coin', (c) => {
+    destroy(c)
+    scoreLabel.value++
+    scoreLabel.text = scoreLabel.value
+  })
 
   player.onCollide('dangerous', (d) => {
     if (isJumping) {
