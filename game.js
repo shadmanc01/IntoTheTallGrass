@@ -15,7 +15,7 @@ let boss_health = 20;
 let minion_health = 1;
 
 //sprites here
-loadSprite('background', 'img/untitled.png')
+loadSprite('background', 'img/background.png')
 loadSprite('coin', 'img/coin.png')
 loadSprite('floor', 'img/floor.png')
 loadSprite('mario', 'img/mario.png')
