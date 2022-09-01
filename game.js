@@ -22,23 +22,26 @@ loadSprite('boss', 'img/boss.png')
 loadSprite('tree', 'img/tree.png')
 loadSprite('qBlock', 'img/qBlock.png')
 loadSprite('block', 'img/block.png')
+loadSprite('brick', 'img/brick.png')
 
 scene("game", ({ score }) => {
     layers(['bg', 'obj', 'ui'], 'obj')
 
     const map = [
-      '                                                                                    ',
-      '                                                                                    ',
-      '                                                                                    ',
-      '                                                                                    ',
-      '                                                                                    ',
-      '                                                                                    ',
-      '                                                                                    ',
-      '                                                                                    ',
-      '          ?                                                                         ',
-      '                                                                                    ',
-      '                  $$$                                                               ',
-      '====================================================================================',
+      '                                                                                                                                                                                                                 ',
+      '                                                                                                                                                                                                                 ',
+      '                                                                                                                                                                                                                 ',
+      '                                                                              x x                                                                                                                                ',
+      '                   ?                                                         zzzzzzzz    zzz?               ?          zzz    z??z                                                         ==                    ',
+      '                                                                                                                                                                                          ===                    ',
+      '                                                                                                                                                                                         ====                    ',
+      '                                                             ?                                                                                                                          =====                    ',
+      '             ?   z?z?z                     ==         ==                  z?z               ?      zz    ?  ?  ?    z          zz      z  z          zz  zz            zz?z            ======                    ',
+      '                                   ==      ==         ==                                                                              zz  zz        zzz  zzz                          =======                    ',
+      '                         ==        ==      ==         ==                                                                             zzz  zzz      zzzz  zzzz     zz              zz ========                    ',
+      '                         ==        ==      ==     x x ==                               z         x x              x x               zzzz  zzzz    zzzzz  zzzzz    zz        x x   zz=========                    ',
+      '==================================================================  ================   =================================================  =============  ========================================================',
+      '==================================================================  ================   =================================================  =============  ========================================================',
     ]
     
     //Functions
@@ -70,7 +73,8 @@ scene("game", ({ score }) => {
         'X': [sprite('boss'), solid(), 'dangerous', scale(.1)],
         '$': () => [sprite('coin'), 'coin', area()],
         '?': () => [sprite('qBlock'), solid(), area(), 'qBlock'],
-        '}': () => [sprite('block'), solid(), area(), 'block']
+        '}': () => [sprite('block'), solid(), area(), 'block'],
+        'z': () => [sprite('brick'), solid(), area()],
     }
 
     const gameLevel = addLevel(map, levelCfg)
