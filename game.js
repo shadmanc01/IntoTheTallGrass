@@ -3,7 +3,6 @@ kaboom({
     fullscreen: true,
     scale: 1,
     debug: true,
-    background: [0, 0, 0, 1]
 })
 
 //JS Variables
@@ -16,6 +15,7 @@ let boss_health = 20;
 let minion_health = 1;
 
 //sprites here
+loadSprite('background', 'img/untitled.png')
 loadSprite('coin', 'img/coin.png')
 loadSprite('floor', 'img/floor.png')
 loadSprite('mario', 'img/mario.png')
@@ -92,6 +92,13 @@ onKeyDown('enter', () => {
 //Scenes
 scene("game", ({ score }) => {
     layers(['bg', 'obj', 'ui'], 'obj')
+    let mainScreen = add([
+      sprite("background"),
+      pos(width() / 6, height() / 8),
+      origin("center"),
+      scale(3),
+      fixed(),
+    ]);
 
     const map = [
       '                                                                                                                                                                                                =',
@@ -144,7 +151,8 @@ const player = add([
     sprite('mario'), solid(),
     pos(30, 0),
     body(),
-    area(),
+    area({shape: "rect", width: 70, height: 200}),
+    scale(.15),
     //big(),
     origin('bot')
   ])
@@ -243,18 +251,39 @@ const player = add([
 
 })
 scene('win', ({score}) => {
+  let mainScreen = add([
+    sprite("background"),
+    pos(width() / 6, height() / 8),
+    origin("center"),
+    scale(3),
+    fixed(),
+  ]);
   add([text('You Win'), pos(325, 200)])
   add([text(score, 32), origin('center'), pos(width()/2, height()/2)])
   addButton2("Restart", vec2(514, 450), "game")    
 })
 
 scene('lose', ({ score }) => {
+  let mainScreen = add([
+    sprite("background"),
+    pos(width() / 6, height() / 8),
+    origin("center"),
+    scale(3),
+    fixed(),
+  ]);
   add([text('You Lose'), pos(325, 200)])
   add([text(score, 32), origin('center'), pos(width()/2, height()/2)])
   addButton2("Restart", vec2(514, 450), "game")
 })
 
 scene('Home', () => {
+  let mainScreen = add([
+    sprite("background"),
+    pos(width() / 6, height() / 8),
+    origin("center"),
+    scale(3),
+    fixed(),
+  ]);
   add([text('Pokemon Adventure'), pos(325, 200)])
   addButton2("Play", vec2(514, 450), "game")
 })
