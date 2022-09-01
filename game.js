@@ -27,13 +27,14 @@ loadSprite('block', 'img/block.png')
 loadSprite('brick', 'img/brick.png')
 loadSound('route1', 'sound/route1.mp3')
 
+//Sounds
 const music = play('route1', {
   loop: true
 })
 volume(0.5)
 
 //Functions
-function patrol(speed = 60, dir = 1) {
+function patrol(speed, dir = 1) {
   return {
     id: "patrol",
     require: [ "pos", "area", ],
@@ -50,26 +51,26 @@ function patrol(speed = 60, dir = 1) {
   }
 }
 
-function addButton2(txt, p) {
+function addButton2(txt, position, goGame) {
 
   const btn = add([
     text(txt),
-    pos(p),
+    pos(position),
     area({ cursor: "pointer", }),
     scale(1),
     origin("center")
   ])
 
   btn.onClick(() => {
-    go("game", { score: 0})
+    go(goGame, { score: 0})
   })
 
   onKeyDown('space', () => {
-    go("game", {score:0})
+    go(goGame, {score:0})
 })
 
 onKeyDown('enter', () => {
-  go("game", {score:0})
+  go(goGame, {score:0})
 })
 
   btn.onUpdate(() => {
@@ -88,6 +89,7 @@ onKeyDown('enter', () => {
   })
 }
 
+//Scenes
 scene("game", ({ score }) => {
     layers(['bg', 'obj', 'ui'], 'obj')
 
@@ -110,25 +112,6 @@ scene("game", ({ score }) => {
       '==================================================================  ================   =================================================  =============  ========================================                                                    =========================================================================================================================================================',
 
     ]
-
-    //Functions
-     function patrol(speed, dir = 1) {
-      return {
-        id: "patrol",
-        require: [ "pos", "area", ],
-        add() {
-          this.on("collide", (obj, col) => {
-            if (col.isLeft() || col.isRight()) {
-              dir = -dir
-            }
-          })
-        },
-        update() {
-          this.move(speed * dir, 0)
-        },
-      }
-    }
-
 
     //assigning sprite
     const levelCfg = {
@@ -210,9 +193,10 @@ const player = add([
       boss_health--;
       if(boss_health === 0) {
       destroy(d);
+      boss_health = 20
       scoreLabel.value += 100;
       scoreLabel.text = scoreLabel.value;
-      // go('win', { score: scoreLabel.value})
+      go('win', { score: scoreLabel.value})
       }
     } else {
       go('lose', { score: scoreLabel.value})
@@ -256,58 +240,23 @@ const player = add([
       player.jump(jumpForce)
      }
  })
+
 })
-scene('win'), ({score}) => {
+scene('win', ({score}) => {
   add([text('You Win'), pos(325, 200)])
   add([text(score, 32), origin('center'), pos(width()/2, height()/2)])
-  function addButton2(txt, p) {
-    const btn = add([
-      text(txt),
-      pos(p),
-      area({ cursor: "pointer", }),
-      scale(1),
-      origin("center")
-    ])
-  
-    btn.onClick(() => {
-      go("game", { score: 0})
-    })
-
-    onKeyDown('space', () => {
-      go("game", {score:0})
-  })
-
-  onKeyDown('enter', () => {
-    go("game", {score:0})
+  addButton2("Restart", vec2(514, 450), "game")    
 })
-  
-    btn.onUpdate(() => {
-      if (btn.isHovering()) {
-        const t = time() * 10
-        btn.color = rgb(
-          wave(0, 255, t),
-          wave(0, 255, t + 2),
-          wave(0, 255, t + 4)
-        )
-        btn.scale = vec2(1.2)
-      } else {
-        btn.scale = vec2(1)
-        btn.color = rgb()
-      }
-    })
-  }
-  addButton2("Restart", vec2(514, 450))    
-}
 
 scene('lose', ({ score }) => {
   add([text('You Lose'), pos(325, 200)])
   add([text(score, 32), origin('center'), pos(width()/2, height()/2)])
-  addButton2("Restart", vec2(514, 450))
+  addButton2("Restart", vec2(514, 450), "game")
 })
 
 scene('Home', () => {
   add([text('Pokemon Adventure'), pos(325, 200)])
-  addButton2("Play", vec2(514, 450))
+  addButton2("Play", vec2(514, 450), "game")
 })
 
 go("Home", { score: 0})
