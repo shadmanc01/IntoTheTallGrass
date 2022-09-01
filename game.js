@@ -7,7 +7,7 @@ kaboom({
 })
 
 //JS Variables
-const playerSpeed = 120;
+const playerSpeed = 220;
 const jumpForce = 550;
 const FALL_DEATH = 700; 
 const ENEMY_SPEED = 120;
@@ -133,7 +133,7 @@ scene("game", ({ score }) => {
         height: 20,
         '=': () => [sprite('floor'), solid(), area()],
         'x': () => [sprite('enemy'), solid(), area(), body(), scale(.05), origin('bot'), patrol(70), 'dangerous'],
-        'X': () => [sprite('boss'), solid(), area(), body(), scale(.1), origin('bot'), patrol(300), 'boss',
+        'X': () => [sprite('boss'), solid(), area(), body(), scale(.1), origin('bot'), patrol(300), 'boss'],
         '$': () => [sprite('coin'), 'coin', area()],
         '?': () => [sprite('qBlock'), solid(), area(), 'qBlock'],
         '}': () => [sprite('block'), solid(), area(), 'block'],
