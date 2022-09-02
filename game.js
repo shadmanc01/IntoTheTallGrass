@@ -298,7 +298,7 @@ scene('Home', () => {
     scale(3),
     fixed(),
   ]);
-  add([text('Pokemon Adventure'), pos(320, 200)])
+  add([text('Into the Tall Grass'), pos(300, 200)])
   addButton2("Play", vec2(700, 400), "game")
 })
 
