@@ -151,7 +151,7 @@ const player = add([
     sprite('mario'), solid(),
     pos(30, 0),
     body(),
-    area({shape: "circ", width: 1100, height: 1000}),
+    area({shape: "circle", width: 1100, height: 1000}),
     scale(.025),
     //big(),
     origin('bot')
