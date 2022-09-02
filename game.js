@@ -11,7 +11,7 @@ const jumpForce = 550;
 const FALL_DEATH = 700; 
 const ENEMY_SPEED = 120;
 const BOSS_SPEED = 300;
-let boss_health = 50;
+let boss_health = 20;
 let minion_health = 1;
 
 //sprites here
@@ -185,7 +185,7 @@ const player = add([
   })
 
   player.onCollide('dangerous', (d) => {
-    if (isJumping) {
+    if (d.pos.y > player.pos.y) {
       minion_health--;
       if(minion_health === 0) destroy(d);
       scoreLabel.value += 2;
@@ -210,17 +210,17 @@ const player = add([
 	})
 
   player.onCollide('boss', (d) => {
-    if (isJumping) {
+    if (d.pos.y > player.pos.y) {
       boss_health--;
       if(boss_health === 0) {
       destroy(d);
-      boss_health = 50;
+      boss_health = 20;
       scoreLabel.value += 100;
       scoreLabel.text = scoreLabel.value;
       go('win', { score: scoreLabel.value})
       }
     } else {
-      boss_health = 50;
+      boss_health = 20;
       go('lose', { score: scoreLabel.value})
     }
   })
