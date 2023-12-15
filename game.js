@@ -58,7 +58,7 @@ function addButton2(txt, position, goGame) {
     pos(position),
     area({ cursor: "pointer", }),
     scale(1),
-    origin("center")
+    anchor("center")
   ])
 
   btn.onClick(() => {
@@ -95,7 +95,7 @@ scene("game", ({ score }) => {
     let mainScreen = add([
       sprite("background"),
       pos(width() / 6, height() / 8),
-      origin("center"),
+      anchor("center"),
       scale(3),
       fixed(),
     ]);
@@ -125,8 +125,8 @@ scene("game", ({ score }) => {
         width: 20,
         height: 20,
         '=': () => [sprite('floor'), solid(), area()],
-        'x': () => [sprite('enemy'), solid(), area(), body(), scale(.05), origin('bot'), patrol(70), 'dangerous'],
-        'X': () => [sprite('boss'), solid(), area(), body(), scale(.1), origin('bot'), patrol(300), 'boss'],
+        'x': () => [sprite('enemy'), solid(), area(), body(), scale(.05), anchor('bot'), patrol(70), 'dangerous'],
+        'X': () => [sprite('boss'), solid(), area(), body(), scale(.1), anchor('bot'), patrol(300), 'boss'],
         '$': () => [sprite('coin'), 'coin', area()],
         '?': () => [sprite('qBlock'), solid(), area(), 'qBlock'],
         '}': () => [sprite('block'), solid(), area(), 'block'],
@@ -154,7 +154,7 @@ const player = add([
     area({shape: "circle", width: 1100, height: 1000}),
     scale(.025),
     //big(),
-    origin('bot')
+    anchor('bot')
   ])
 
    onUpdate('mushroom', (m) => {
@@ -268,12 +268,12 @@ scene('win', ({score}) => {
   let mainScreen = add([
     sprite("background"),
     pos(width() / 6, height() / 8),
-    origin("center"),
+    anchor("center"),
     scale(3),
     fixed(),
   ]);
   add([text('You Win'), pos(550, 200)])
-  add([text(score, 32), origin('center'), pos(720, 370)])
+  add([text(score, 32), anchor('center'), pos(720, 370)])
   addButton2("Restart", vec2(715, 500), "game")    
 })
 
@@ -281,12 +281,12 @@ scene('lose', ({ score }) => {
   let mainScreen = add([
     sprite("background"),
     pos(width() / 6, height() / 8),
-    origin("center"),
+    anchor("center"),
     scale(3),
     fixed(),
   ]);
   add([text('You Lose'), pos(530, 200)])
-  add([text(score, 32), origin('center'), pos(720, 375)])
+  add([text(score, 32), anchor('center'), pos(720, 375)])
   addButton2("Restart", vec2(715, 500), "game")
 })
 
@@ -294,7 +294,7 @@ scene('Home', () => {
   let mainScreen = add([
     sprite("background"),
     pos(width() / 6, height() / 8),
-    origin("center"),
+    anchor("center"),
     scale(3),
     fixed(),
   ]);
